@@ -7,5 +7,6 @@ int main()
 int a;
 printf("entrer votre nom");
 scanf("%d",&a);
+printf("%d",a);
     return 0;
 }
