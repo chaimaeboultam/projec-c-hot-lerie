@@ -36,9 +36,10 @@ int main()
             printf("\n");
             printf("Please enter the number corresponding to the desired option:");
             scanf("%d",&rep1);
+
             if(rep1<1 || rep1>5){
                 printf("\n");
-                printf("inexisted number please try to entre an available numbre\n\n");} // it gonna be good if this appeare in red color
+                printf("inexisted number please try to entre an available numbre\n\n");} 
             }while(rep1<1 || rep1>5);
 
             switch(rep1){
@@ -77,14 +78,15 @@ int main()
             printf("\n");
             printf("3-create a promotion\n");
             printf("\n");
-
+            printf("4-employers information\n");
+            printf("\n");
             printf("Please enter the number corresponding to the desired option:");
             scanf("%d",&rep1);
 
-            do{
+           if(rep1<1 || rep1>4){
                 printf("\n");
                 printf("inexisted number please try to entre an available numbre\n\n");}
-            }while(rep1<1 || rep1>3);
+            }while(rep1<1 || rep1>4);
 
 
              switch(rep1){
@@ -97,7 +99,9 @@ int main()
                 case 3:
                    // promotion();
                     break;
-
+                case 4:
+                   // employer_info();
+                    break;
                 }
                 break;}
 
@@ -106,8 +110,6 @@ int main()
 
 
 
-// the menu is ready in it entire now we have to fill the function declared above
-// !!!problem i noticed that we should clean the terminal after each iteration so we need conio i thing
-//because the terminal look full and we should skroll (just terme of view as student or prof will be distracted
+
     return 0;
 }
