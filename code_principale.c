@@ -36,7 +36,7 @@ int main()
             printf("\n");
             printf("Please enter the number corresponding to the desired option:");
             scanf("%d",&rep1);
-            if(rep1<1 || rep1>3){
+            if(rep1<1 || rep1>5){
                 printf("\n");
                 printf("inexisted number please try to entre an available numbre\n\n");} // it gonna be good if this appeare in red color
             }while(rep1<1 || rep1>5);
@@ -81,7 +81,7 @@ int main()
             printf("Please enter the number corresponding to the desired option:");
             scanf("%d",&rep1);
 
-            if(rep1<1 || rep1>3){
+            do{
                 printf("\n");
                 printf("inexisted number please try to entre an available numbre\n\n");}
             }while(rep1<1 || rep1>3);
