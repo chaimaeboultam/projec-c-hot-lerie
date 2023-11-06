@@ -16,6 +16,8 @@ int main() {
     client = fopen("client.txt","a+");
     reservation = fopen("reservation.txt","a+");
 
+
+employer e;
     int rep0, rep1;
     user_menu:
     printf("===============================================\n");
@@ -91,6 +93,7 @@ int main() {
 
                 clearScreen();
                 printf("HI dear admin, Welcome your hotel!\n");
+                admin_menu:
                 printf("===============MENU=================\n");
                 printf("1- Rooms information\n");
                 printf("2- Manage customers and reservations\n");
@@ -110,7 +113,7 @@ int main() {
                     printf("you want to return to menu (1:yes)");
                    scanf("%d",&r);
                    if(r==1)
-                   goto menu;
+                   goto admin_menu;
                         break;
                     case 2:
                         // manage();
@@ -118,7 +121,7 @@ int main() {
                      printf("you want to return to menu (1:yes)");
                    scanf("%d",&r);
                    if(r==1)
-                   goto menu;
+                   goto admin_menu;
                         break;
                     case 3:
                         // promotion();
@@ -126,15 +129,15 @@ int main() {
                      printf("you want to return to menu (1:yes)");
                    scanf("%d",&r);
                    if(r==1)
-                   goto menu;
+                   goto admin_menu;
                         break;
                     case 4:
-                        // employer_info();
+                        manage_employer(e);
                         clearScreen();
                      printf("you want to return to menu (1:yes)");
                    scanf("%d",&r);
                    if(r==1)
-                   goto menu;
+                   goto admin_menu;
                         break;
                     case 5:
                         clearScreen();
