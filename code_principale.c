@@ -1,11 +1,5 @@
 #include "main.h"
-void clearScreen() {
-    #ifdef _WIN32 // Check if the operating system is Windows
-        system("cls"); // For Windows systems
-    #else
-        system("clear"); // For Linux/Unix systems
-    #endif
-}
+
 
 int main() {
     int r;
@@ -19,6 +13,7 @@ int main() {
 
 employer e;
     int rep0, rep1;
+    clearScreen();
     user_menu:
     printf("===============================================\n");
     printf("      WELCOME to Hotel TRANSYLVANIA\n");
@@ -50,14 +45,18 @@ employer e;
                 scanf("%d",&rep1);
                 }while(rep1<1 || rep1>5);
                 switch(rep1){
+
                 case 1:{
                     clearScreen();
                    //discoverroom();
                    printf("you want to return to menu (1:yes)");
                    scanf("%d",&r);
                    if(r==1)
+                   clearScreen();
                    goto menu;
                     break;}
+                
+                
                 case 2:{
                      clearScreen();
                      printf("you want to return to menu (1:yes)");
@@ -92,13 +91,14 @@ employer e;
         case 2: {
 
                 clearScreen();
+                login();
                 printf("HI dear admin, Welcome your hotel!\n");
                 admin_menu:
                 printf("===============MENU=================\n");
                 printf("1- Rooms information\n");
                 printf("2- Manage customers and reservations\n");
                 printf("3- Create a promotion\n");
-                printf("4- Employers information\n");
+                printf("4- manage employer\n");
                 printf("5- Go Back\n");
 
                 do{
@@ -107,42 +107,49 @@ employer e;
                 } while (rep1 < 1 || rep1 > 5);
 
                 switch (rep1) {
-                    case 1:
+
+                    case 1:{
                     // roominfo();
                     clearScreen();
                     printf("you want to return to menu (1:yes)");
                    scanf("%d",&r);
                    if(r==1)
                    goto admin_menu;
-                        break;
-                    case 2:
+                        break;}
+
+                    case 2:{
                         // manage();
                         clearScreen();
                      printf("you want to return to menu (1:yes)");
                    scanf("%d",&r);
                    if(r==1)
                    goto admin_menu;
-                        break;
-                    case 3:
+                        break;}
+
+                    case 3:{
                         // promotion();
                         clearScreen();
                      printf("you want to return to menu (1:yes)");
                    scanf("%d",&r);
                    if(r==1)
                    goto admin_menu;
-                        break;
-                    case 4:
-                        manage_employer(e);
+                        break;}
+
+                    case 4:{
                         clearScreen();
+                        manage_employer(e);
+
                      printf("you want to return to menu (1:yes)");
                    scanf("%d",&r);
+                   clearScreen();
                    if(r==1)
                    goto admin_menu;
-                        break;
-                    case 5:
+                        break;}
+
+                    case 5:{
                         clearScreen();
                         goto user_menu;
-                        break;
+                        break;}
                 }
 
             break;

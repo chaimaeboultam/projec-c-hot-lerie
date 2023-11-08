@@ -40,6 +40,8 @@ int tel_e,code_e;
 FILE *p,*q; // p pointer on employer file et q for delete file
 
 //***********************declaration des fonction************************
+void clearScreen();
+void login();
 void discoverroom();
 void service();
 void feedback(client *f);
@@ -68,6 +70,23 @@ void remove_employer(employer e);
 
 //  ********************************definition des fonctions******************************************
 
+void clearScreen() {
+    #ifdef _WIN32 // Check if the operating system is Windows
+        system("cls"); // For Windows systems
+    #else
+        system("clear"); // For Linux/Unix systems
+    #endif
+}
+void login(){
+    int cni,code;
+    printf("*****login*****\n");
+   do {printf("enter your cni: ");
+   scanf("%d",&cni);
+printf("enter password: ");
+scanf("%d",&code);
+clearScreen();
+   }while(cni!=123 || code!=1234);
+}
 void discoverroom(){
  printf("in our hotel we have the following type of rooms :\n\n"
 "          NORMAL ROOM :(price of 150$ per night)\n\n"
@@ -126,20 +145,22 @@ do{
             printf("2-delete employer\n");
             printf("\n");
             printf("3-discover employers\n");
-           
+           printf("\n");
+            printf("4-modify employers information\n");
             printf("Please enter the number corresponding to the desired option:");
+            clearScreen();
             scanf("%d",&rep1);
-            if(rep1<1 || rep1>3){
+            if(rep1<1 || rep1>4){
                 printf("\n");
                 printf("inexisted number please try to entre an available numbre\n\n");}
-            }while(rep1<1 || rep1>3);
+            }while(rep1<1 || rep1>4);
 
 
 switch(rep1){
     case 1: add_employer(e);  break;
     case 2:remove_employer(e); break;
     case 3: see_employer(e); break;
-    
+    case 4: modify_employer(e); break;
 }
 }
 
@@ -174,11 +195,7 @@ return 1;
     fclose(p);
     printf("employers added\n");
 
-   /* printf("you want to return to manage employer menu (0:no 1:yes)");
-    int rep;
-    if(rep==1){
-        goto manageemploye;
-    }*/
+
 }
 
 
@@ -194,11 +211,7 @@ return 1;
     fscanf(p,"%d %s %s %s %d\n",e.code_e,e.nom_e,e.prenom_e,e.post,&e.tel_e);
     printf("%d %s %s %s %d\n",e.code_e,e.nom_e,e.prenom_e,e.post,e.tel_e);
     }
-  /*printf("you want to return to manage employer menu (0:no 1:yes)");
-    int rep;
-    if(rep==1){
-        goto manageemploye;
-    }*/
+
 
 }
  void remove_employer(employer e){
@@ -226,14 +239,50 @@ return 1;
     fclose(p);
     remove("employer.txt");
     rename("delemployer.txt","employer.txt");
- /*printf("you want to return to manage employer menu (0:no 1:yes)");
-    int rep;
-    if(rep==1){
-        goto manageemploye;
-    }*/
-
 }
 
+modify_employer(employer e){
+        int code;
+p=fopen("employer.txt","r");
+     if(p==NULL){
+        printf("error uploading employer file");
+return 1;
+    }
+    q=fopen("delemployer.txt","w");
+     if(q==NULL){
+        printf("error uploading employer file");
+return 1;
+    }
+    printf("enter employer code you want to modify\n");
+    scanf("%d",&code);
+
+
+    while(!feof(p) ){
+    fscanf(p,"%d %s %s %s %d\n",&e.code_e,e.nom_e,e.prenom_e,e.post,&e.tel_e);
+    if(e.code_e == code){
+        printf("enter correct inforamtion\n\n");
+
+    printf("employer code:");
+    scanf("%d",&e.code_e);
+    printf("firstname:");
+    scanf("%s",e.nom_e);
+    printf("last name:");
+    scanf("%s",e.prenom_e);
+    printf("post:");
+    fflush(stdin);
+    gets(e.post);
+    printf("\n phone:");
+    scanf("%d",&e.tel_e);
+
+
+    }
+    fprintf(q,"%d %s %s %s %d\n",e.code_e,e.nom_e,e.prenom_e,e.post,e.tel_e);
+    }
+    fclose(q);
+    fclose(p);
+    remove("employer.txt");
+    rename("delemployer.txt","employer.txt");
+}
 
 
 
