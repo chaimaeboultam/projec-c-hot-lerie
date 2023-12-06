@@ -49,8 +49,8 @@ void manage_employer(employer e);
 void add_employer(employer e);
 void see_employer(employer e);
 void remove_employer(employer e);
-
-
+void modify_employer(employer e);
+int search_code(employer e,int code);
 
 
 
@@ -132,7 +132,24 @@ void service(){
 
 
 //**************************************admin part******************************
+int search_code(employer e,int code){
+    int a=0;
+    p=fopen("employer.txt","r");
+ if(p==NULL){
+        printf("error uploading employer file");
+return 0 ;
+    }
+    while(!feof(p)){
+        fscanf(p,"%d %s %s %s %d\n",&e.code_e,e.nom_e,e.prenom_e,e.post,&e.tel_e);
+    if(e.code_e==code){
+        a=1;
+        break;
+    }
+    }
 
+return a;
+
+}
 
 void manage_employer(employer e){
     int rep1;
@@ -147,8 +164,9 @@ do{
             printf("3-discover employers\n");
            printf("\n");
             printf("4-modify employers information\n");
+
             printf("Please enter the number corresponding to the desired option:");
-            clearScreen();
+            
             scanf("%d",&rep1);
             if(rep1<1 || rep1>4){
                 printf("\n");
@@ -167,12 +185,12 @@ switch(rep1){
 
 
 void add_employer(employer e){
-
+clearScreen();
     int n;// numbre of employer in hotel
     p=fopen("employer.txt","a");
     if(p==NULL){
         printf("error uploading employer file");
-return 1;
+return 0 ;
     }
     printf("enter the number of employer you want to add");
     scanf("%d",&n);
@@ -195,20 +213,17 @@ return 1;
     fclose(p);
     printf("employers added\n");
 
-
 }
-
-
 
 void see_employer(employer e){
 p=fopen("employer.txt","r");
      if(p==NULL){
         printf("error uploading employer file");
-return 1;
+return 0 ;
     }
     printf("code firstname lastname post phone\n");
     while(!feof(p)){
-    fscanf(p,"%d %s %s %s %d\n",e.code_e,e.nom_e,e.prenom_e,e.post,&e.tel_e);
+    fscanf(p,"%d %s %s %s %d\n",&e.code_e,e.nom_e,e.prenom_e,e.post,&e.tel_e);
     printf("%d %s %s %s %d\n",e.code_e,e.nom_e,e.prenom_e,e.post,e.tel_e);
     }
 
@@ -219,14 +234,14 @@ return 1;
 p=fopen("employer.txt","r");
      if(p==NULL){
         printf("error uploading employer file");
-return 1;
+return 0 ;
     }
     q=fopen("delemployer.txt","w");
      if(q==NULL){
         printf("error uploading employer file");
-return 1;
+return 0 ;
     }
-    printf("enter employer code you want to delete");
+    printf("enter employer code you want to delete: ");
     scanf("%d",&del);
 
 
@@ -239,23 +254,29 @@ return 1;
     fclose(p);
     remove("employer.txt");
     rename("delemployer.txt","employer.txt");
+    printf("employer removed");
 }
-
-modify_employer(employer e){
-        int code;
+/*-------------------------------------------------------------------------------------------*/
+void modify_employer(employer e){
+        int code,a;
 p=fopen("employer.txt","r");
      if(p==NULL){
         printf("error uploading employer file");
-return 1;
+return 0 ;
     }
     q=fopen("delemployer.txt","w");
      if(q==NULL){
         printf("error uploading employer file");
-return 1;
+return 0 ;
     }
+
+    do{
     printf("enter employer code you want to modify\n");
     scanf("%d",&code);
+     a=search_code(e,code);
+     }while(a==0);
 
+     rewind(p);
 
     while(!feof(p) ){
     fscanf(p,"%d %s %s %s %d\n",&e.code_e,e.nom_e,e.prenom_e,e.post,&e.tel_e);
@@ -273,19 +294,16 @@ return 1;
     gets(e.post);
     printf("\n phone:");
     scanf("%d",&e.tel_e);
-
-
     }
     fprintf(q,"%d %s %s %s %d\n",e.code_e,e.nom_e,e.prenom_e,e.post,e.tel_e);
     }
     fclose(q);
     fclose(p);
+    
     remove("employer.txt");
-    rename("delemployer.txt","employer.txt");
+    
+    printf("employer modified\n");
 }
-
-
-
 
 
 #endif // MAIN_H
