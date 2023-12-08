@@ -12,8 +12,8 @@
 typedef struct room{
     char type[20];
     int number;
-    float price;
-    char Availability[10];
+    int price;
+    char status[10];
 }room;
 
 typedef struct client{
@@ -37,7 +37,8 @@ char nom_e[10],prenom_e[10],post[10];
 int tel_e,code_e;
 }employer;
 
-FILE *p,*q; // p pointer on employer file et q for delete file
+FILE *p,*q;// p pointer on employer file et q for delete file
+
 
 //***********************declaration des fonction************************
 void clearScreen();
@@ -50,8 +51,14 @@ void add_employer(employer e);
 void see_employer(employer e);
 void remove_employer(employer e);
 void modify_employer(employer e);
+
 int search_code(employer e,int code);
 
+
+void add_room(room r);
+void see_room(room r);
+void remove_room(room r);
+void modify_room(room r);
 
 
 
@@ -87,6 +94,8 @@ scanf("%d",&code);
 clearScreen();
    }while(cni!=123 || code!=1234);
 }
+
+
 void discoverroom(){
  printf("in our hotel we have the following type of rooms :\n\n"
 "          NORMAL ROOM :(price of 150$ per night)\n\n"
@@ -146,41 +155,12 @@ return 0 ;
         break;
     }
     }
-
+fclose(p);
 return a;
 
 }
 
-void manage_employer(employer e){
-    int rep1;
- manageemploye:
-printf("choose by number\n");
-do{
-            printf("\n");
-            printf("1-add employer\n");
-            printf("\n");
-            printf("2-delete employer\n");
-            printf("\n");
-            printf("3-discover employers\n");
-           printf("\n");
-            printf("4-modify employers information\n");
 
-            printf("Please enter the number corresponding to the desired option:");
-            
-            scanf("%d",&rep1);
-            if(rep1<1 || rep1>4){
-                printf("\n");
-                printf("inexisted number please try to entre an available numbre\n\n");}
-            }while(rep1<1 || rep1>4);
-
-
-switch(rep1){
-    case 1: add_employer(e);  break;
-    case 2:remove_employer(e); break;
-    case 3: see_employer(e); break;
-    case 4: modify_employer(e); break;
-}
-}
 
 
 
@@ -259,6 +239,12 @@ return 0 ;
 /*-------------------------------------------------------------------------------------------*/
 void modify_employer(employer e){
         int code,a;
+        do{
+    printf("enter employer code you want to modify\n");
+    scanf("%d",&code);
+     a=search_code(e,code);
+    }while(a==0);
+
 p=fopen("employer.txt","r");
      if(p==NULL){
         printf("error uploading employer file");
@@ -269,14 +255,6 @@ return 0 ;
         printf("error uploading employer file");
 return 0 ;
     }
-
-    do{
-    printf("enter employer code you want to modify\n");
-    scanf("%d",&code);
-     a=search_code(e,code);
-     }while(a==0);
-
-     rewind(p);
 
     while(!feof(p) ){
     fscanf(p,"%d %s %s %s %d\n",&e.code_e,e.nom_e,e.prenom_e,e.post,&e.tel_e);
@@ -299,11 +277,157 @@ return 0 ;
     }
     fclose(q);
     fclose(p);
-    
+
     remove("employer.txt");
-    
+rename("delemployer.txt","employer.txt");
     printf("employer modified\n");
 }
+
+// -----------------------------room management --------------------------------
+
+void add_room(room r){
+    int nbr;
+printf("type number of rooms you want to add");
+scanf("%d",&nbr);
+p=fopen("room.txt","a");
+ if(p==NULL){
+        printf("error uploading room file");
+return 0 ;
+    }
+
+    for(int i=0;i<nbr;i++){
+        printf("room number: ");
+        scanf("%d",&r.number);
+        printf("room type: ");
+        scanf("%s",r.type);
+        printf("room price: ");
+        scanf("%d",&r.price);
+        printf("room status: ");
+        scanf("%s",r.status);
+        fprintf(p,"%d %s %d %s\n",r.number,r.type,r.price,r.status);
+    }
+printf("room added");
+fclose(p);
+}
+
+void modify_room(room r){
+        int numb,a;
+        printf("enter room number you want to modify\n");
+    scanf("%d",&numb);
+
+p=fopen("room.txt","r");
+     if(p==NULL){
+        printf("error uploading room file");
+return 0 ;
+    }
+    q=fopen("delroom.txt","w");
+     if(q==NULL){
+        printf("error uploading room file");
+return 0 ;
+    }
+
+    while(!feof(p) ){
+    fscanf(p,"%d %s %d %s\n",&r.number,r.type,&r.price,r.status);
+    if(r.number == numb){
+        printf("enter correct inforamtion\n\n");
+
+    printf("room number:");
+    scanf("%d",&r.number);
+    printf("type:");
+    scanf("%s",r.type);
+    printf("price:");
+    scanf("%d",&r.price);
+    printf("status:");
+    fflush(stdin);
+    gets(r.status);
+
+    }
+    fprintf(q,"%d %s %d %s\n",r.number,r.type,r.price,r.status);
+    }
+    fclose(q);
+    fclose(p);
+
+    remove("room.txt");
+    rename("delroom.txt","room.txt");
+    printf("room modified\n");
+}
+
+void see_room(room r){
+p=fopen("room.txt","r");
+     if(p==NULL){
+        printf("error uploading room file");
+return 0 ;
+    }
+    printf("number type price status\n");
+    while(!feof(p)){
+    fscanf(p,"%d %s %d %s\n",&r.number,r.type,&r.price,r.status);
+    printf("%d %s %d %s\n",r.number,r.type,r.price,r.status);
+    }
+
+}
+
+ void remove_room(room r){
+        int del;
+p=fopen("room.txt","r");
+     if(p==NULL){
+        printf("error uploading room file");
+return 0 ;
+    }
+    q=fopen("delroom.txt","w");
+     if(q==NULL){
+        printf("error uploading room file");
+return 0 ;
+    }
+    printf("enter room number you want to delete: ");
+    scanf("%d",&del);
+
+
+    while(!feof(p) ){
+    fscanf(p,"%d %s %d %s\n",&r.number,r.type,&r.price,r.status);
+    if(r.number != del)
+    fprintf(q,"%d %s %d %s\n",r.number,r.type,r.price,r.status);
+    }
+    fclose(q);
+    fclose(p);
+    remove("room.txt");
+    rename("delroom.txt","room.txt");
+    printf("room removed");
+}
+
+
+void change_status(room r,int nbr,char *t){
+        int a;
+p=fopen("room.txt","r");
+     if(p==NULL){
+        printf("error uploading room file");
+return 0 ;
+    }
+    q=fopen("delroom.txt","w");
+     if(q==NULL){
+        printf("error uploading room file");
+return 0 ;
+    }
+    while(!feof(p) ){
+    fscanf(p,"%d %s %d %s\n",&r.number,r.type,&r.price,r.status);
+    if(r.number == nbr){
+    
+    strcpy(r.status,t);
+
+    }
+    fprintf(q,"%d %s %d %s\n",r.number,r.type,r.price,r.status);
+    }
+    fclose(q);
+    fclose(p);
+
+    remove("room.txt");
+    rename("delroom.txt","room.txt");
+    printf("room modified\n");
+}
+
+
+
+
+
 
 
 #endif // MAIN_H
