@@ -1,16 +1,20 @@
 #include "main.h"
 
-void manage_room(room r);
-
 int main() {
-    int r;
-    
-   
-
-room ro;
-employer e;
-    int rep0, rep1;
+    int r, nbr;
+    char *st;
+    FILE *room, *customer, *reservation, *employ, *delroom, *temp, *delResr, *delcos, *fedback;
+    room = fopen("room.txt", "a+");
+    customer = fopen("customer.txt", "a+");
+    reservation = fopen("reservation.txt", "a+");
+    employ = fopen("employ.txt", "a+");
+    client f;
+    employer e;
+    rooom ro;
+    reservationn rs;
+    int rep0, rep1, rep2;
     clearScreen();
+
     user_menu:
     printf("===============================================\n");
     printf("      WELCOME to Hotel TRANSYLVANIA\n");
@@ -26,259 +30,367 @@ employer e;
 
     printf("\n");
 
-    switch(rep0) {
+    switch (rep0) {
         case 1: {
-                clearScreen();
-                menu:
-                printf("HI dear client, Welcome to our hotel!\n");
-                printf("===============MENU=================\n");
-                printf("1- Discover our rooms\n");
-                printf("2- Book a stay\n");
-                printf("3- Discover our services\n");
-                printf("4- Give us your feedback\n");
-                printf("5- GO back");
-                do{
+            clearScreen();
+
+            menu:
+            printf("HI dear client, Welcome to our hotel!\n");
+            printf("===============MENU=================\n");
+            printf("1- Discover our Hotel\n");
+            printf("2- Book a stay\n");
+            printf("3- Give us your feedback\n");
+            printf("4- GO back");
+
+            do {
                 printf("\nPlease enter the number corresponding to the desired option in the menu:");
-                scanf("%d",&rep1);
-                }while(rep1<1 || rep1>5);
-                switch(rep1){
+                scanf("%d", &rep1);
+            } while (rep1 < 1 || rep1 > 5);
 
-                case 1:{
+            switch (rep1) {
+                case 1: {
                     clearScreen();
-                   discoverroom();
-                   printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   clearScreen();
-                   goto menu;
-                    break;}
-                
-                
-                case 2:{
-                     clearScreen();
-                     printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto menu;
-                    //reserve()
-                    break;}
-                case 3:{
-                   clearScreen();
-                     printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto menu;
-                   //discover();
-                    break;}
+    printf("Welcome to Hotel Transylvania! Experience elegance and mystique in the heart of Transylvania.Captivating atmosphere with timeless charm and supernatural touches. Legendary accommodations, from Cozy Crypts to Lavish Lair Suites, offer a luxurious and mysterious stay. Indulge in Dining in Darkness for a hauntingly heavenly culinary experience. Hotel Transylvania is a hub of entertainment with an Enchanting Elegance Spa, Midnight Pool, and mesmerizing performances at the Dracula Theater. Enjoy personalized service led by Count Dracula himself. Book your escape for a romantic, family, or solo adventure. Embrace the legend at Hotel Transylvania - Where Elegance Meets the Extraordinary.\n");
 
-                case 4:{
+
+                    printf("\n");
+                    printf("\nyou want to return to menu (1:yes)");
+                    scanf("%d", &r);
+                    if (r == 1)
+                        clearScreen();
+                    goto menu;
+                    break;
+                }
+
+                case 2: {
                     clearScreen();
+                    book(rs);
                     printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto menu;
-                   //feedback(&f);
-                    break;}
-                case 5:{
+                    scanf("%d", &r);
+                    clearScreen();
+                    if (r == 1)
+                        goto menu;
+
+                    break;
+                }
+
+                case 3: {
+                    clearScreen();
+                    feedback();
+                    printf("you want to return to menu (1:yes)");
+                    scanf("%d", &r);
+                    clearScreen();
+                    if (r == 1)
+                        goto menu;
+
+                    break;
+                }
+
+                case 4: {
                     clearScreen();
                     goto user_menu;
-                    break;}
+                    break;
                 }
-                }
-                //if user choose admin
+            }
+        }
+
         case 2: {
+            clearScreen();
+            login();
+            printf("HI dear admin, Welcome your hotel!\n");
+            admin_menu:
+            printf("===============MENU=================\n");
+            printf("1- Manage rooms\n");
+            printf("2- Manage customers\n");
+            printf("3- Manage reservation\n");
+            printf("4- Manage employer\n");
+            printf("5- Go Back\n");
 
-                clearScreen();
-                login();
-                printf("HI dear admin, Welcome your hotel!\n");
-                admin_menu:
-                clearScreen();
-                printf("===============MENU=================\n");
-                printf("1- Manage Rooms \n");
-                printf("2- Manage reservations\n");
-                printf("3- Create a promotion\n");
-                printf("4- manage employer\n");
-                printf("5- Go Back\n");
+            do {
+                printf("Please enter the number corresponding to the desired option in the menu:");
+                scanf("%d", &rep1);
+            } while (rep1 < 1 || rep1 > 5);
 
-                do{
-                    printf("Please enter the number corresponding to the desired option in the menu:");
-                    scanf("%d", &rep1);
-                } while (rep1 < 1 || rep1 > 5);
+            switch (rep1) {
+                case 1: {
+                    clearScreen();
 
-                switch (rep1) {
-//----------------------------------------------manage room----------------------------------------------
-                    case 1:{
-                         clearScreen();
-                     int rep1,nbr;
-                     char st[10];
- manage_room:
-printf("choose by number\n");
-do{
-            printf("\n");
-            printf("1-add room\n");
-            printf("\n");
-            printf("2-delete room\n");
-            printf("\n");
-            printf("3-discover rooms\n");
-           printf("\n");
-            printf("4-modify rooms information\n");
-            printf("\n");
-            printf("5-change room status\n");
-            printf("\n");
-            printf("6-go back\n");
-            printf("Please enter the number corresponding to the desired option:");
+                    manage_room:
+                    printf("choose by number\n");
+                    do {
+                        printf("\n");
+                        printf("1- Add room\n");
+                        printf("\n");
+                        printf("2- See room\n");
+                        printf("\n");
+                        printf("3- Delete room\n");
+                        printf("\n");
+                        printf("4- Change room status\n");
+                        printf("\n");
+                        printf("5- Go back\n");
+                        printf("Choose from the menu:");
 
-            scanf("%d",&rep1);
-            if(rep1<1 || rep1>6){
-                printf("\n");
-                printf("inexisted number please try to entre an available numbre\n\n");}
-            }while(rep1<1 || rep1>6);
+                        scanf("%d", &rep1);
+                        if (rep1 < 1 || rep1 > 6) {
+                            printf("\n");
+                            printf("inexisted number please try to enter an available number\n\n");
+                        }
+                    } while (rep1 < 1 || rep1 > 6);
 
+                    switch (rep1) {
+                        case 1: {
+                            clearScreen();
+                            add_room(ro);
 
-switch(rep1){
-    case 1:{ add_room(ro); 
-                printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto manage_room;
-                        break;
-     break;}
-    case 2:{remove_room(ro);
-                printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto manage_room;
-                        break;
-     break;}
-    case 3: {see_room(ro); 
-                printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto manage_room;
-                        break;
-    break;}
-    case 4: {modify_room(ro); 
-                printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto manage_room;
-                        break;
-    break;}
-        case 5: {
-            printf("enter room number");
-            scanf("%d",&nbr);
-            do{
-            printf("enter room status");
-            scanf("%s",st);}while(strcmp(st,"yes")!=0 && strcmp(st,"no")!=0);
-            
-            change_status(ro,nbr,&st); break;}
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto manage_room;
+                            break;
+                        }
 
-    case 6:{ goto admin_menu; 
-    
-    break;}
-}
-                    
-                        break;}
+                        case 2: {
+                            clearScreen();
+                            see_room(ro);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto manage_room;
+                            break;
+                        }
 
-                    case 2:{
-                        // manage_reservation();
-                        clearScreen();
-                     printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto admin_menu;
-                        break;}
+                        case 3: {
+                            clearScreen();
+                            remove_room(ro);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto manage_room;
+                            break;
+                        }
 
-                    case 3:{
-                        // promotion();
-                        clearScreen();
-                     printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto admin_menu;
-                        break;}
-// -----------------------------------manage employer---------------------------------
-                    case 4:{
-                        clearScreen();
-                          int rep1;
- manageemploye:
- clearScreen();
-printf("choose by number\n");
-do{
-            printf("\n");
-            printf("1-add employer\n");
-            printf("\n");
-            printf("2-delete employer\n");
-            printf("\n");
-            printf("3-discover employers\n");
-           printf("\n");
-            printf("4-modify employers information\n");
-printf("\n");
-            printf("5-go back\n");
-            printf("Please enter the number corresponding to the desired option:");
+                        case 4: {
+                            clearScreen();
+                            printf("enter room number");
+                            scanf("%d", &nbr);
+                            do {
+                                printf("enter room status type (YES) or (NO):");
+                                scanf("%s", st);
+                            } while (strcmp(st, "YES") != 0 && strcmp(st, "NO") != 0);
 
-            scanf("%d",&rep1);
-            if(rep1<1 || rep1>5){
-                printf("\n");
-                printf("inexisted number please try to entre an available numbre\n\n");}
-            }while(rep1<1 || rep1>5);
+                            change_status(ro, nbr, &st);
+                            break;
+                        }
 
+                        case 5: {
+                            clearScreen();
+                            goto admin_menu;
+                            break;
+                        }
+                    }
 
-switch(rep1){
-    case 1: {add_employer(e); 
-                 printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto manageemploye;
-                        break;
-     break;}
-    case 2:{remove_employer(e); 
-                printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto manageemploye;
-                        break;
-    break;}
-    case 3: {see_employer(e);
-                printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto manageemploye;
-                        break;
-     break;}
-    case 4:{ modify_employer(e); 
-                printf("you want to return to menu (1:yes)");
-                   scanf("%d",&r);
-                   if(r==1)
-                   goto manageemploye;
-                        break;
-    break;}
-    case 5:goto admin_menu; break;
-}
-
-                     
-                        break;}
-
-
-
-
-
-
-
-                    case 5:{
-                        clearScreen();
-                        goto user_menu;
-                        break;}
+                    break;
                 }
 
-            break;
+                case 2: {
+                    clearScreen();
+                    menu2:
+                    printf("1- Add customer\n");
+                    printf("2- Delete customer\n");
+                    printf("3- Modify customer\n");
+                    printf("4- See customers\n");
+                    printf("5- Go back\n");
+                    printf("Please enter the number corresponding to the desired option in the menu:");
+                    scanf("%d", &rep2);
+                    switch (rep2) {
+                        case 1: {
+                            clearScreen();
+                            addCustomer(f);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu2;
+                            break;
+                        }
+                        case 2: {
+                            clearScreen();
+                            deleteCustumer(f);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu2;
+                            break;
+                        }
+                        case 3: {
+                            clearScreen();
+                            modifyCustomer(f);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu2;
+                            break;
+                        }
+                        case 4: {
+                            clearScreen();
+                            seeCustomer(f);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu2;
+                            break;
+                        }
+                        case 5: {
+                            clearScreen();
+                            goto admin_menu;
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+
+                case 3: {
+                    clearScreen();
+                    menu4:
+                    printf("1- Add reservation\n");
+                    printf("2- Delete reservation\n");
+                    printf("3- Modify reservation\n");
+                    printf("4- See reservations\n");
+                    printf("5- Go back\n");
+                    printf("Please enter the number corresponding to the desired option in the menu:");
+                    scanf("%d", &rep2);
+
+                    switch (rep2) {
+                        case 1: {
+                            clearScreen();
+                            addReservation(rs, f, ro);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu4;
+                            break;
+                        }
+
+                        case 2: {
+                            clearScreen();
+                            deleteReservations(rs);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu4;
+                            break;
+                        }
+
+                        case 3: {
+                            clearScreen();
+                            modifyReservation(rs, ro);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu4;
+                            break;
+                        }
+
+                        case 4: {
+                            clearScreen();
+                            seeReservation(rs);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu4;
+                            break;
+                        }
+
+                        case 5: {
+                            goto admin_menu;
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+
+                case 4: {
+                    clearScreen();
+                    menu3:
+                    printf("1- Add Employer\n");
+                    printf("2- Delete Employer\n");
+                    printf("3- Modify Employer\n");
+                    printf("4- See Employers\n");
+                    printf("5- Go back\n");
+                    printf("Please enter the number corresponding to the desired option in the menu:");
+                    scanf("%d", &rep2);
+
+                    switch (rep2) {
+                        case 1: {
+                            clearScreen();
+                            add_employer(e);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu3;
+                            break;
+                        }
+                        case 2: {
+                            clearScreen();
+                            remove_employer(e);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu3;
+                            break;
+                        }
+                        case 3: {
+                            clearScreen();
+                            modify_employer(e);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu3;
+                            break;
+                        }
+                        case 4: {
+                            clearScreen();
+                            see_employer(e);
+                            printf("you want to return to menu (1:yes)");
+                            scanf("%d", &r);
+                            clearScreen();
+                            if (r == 1)
+                                goto menu3;
+                            break;
+                        }
+                        case 5: {
+                            clearScreen();
+                            goto admin_menu;
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            case 5: {
+                clearScreen();
+                goto user_menu;
+                break;
+            }
         }
     }
 
     return 0;
-}
-
-
-
-
-   
+}   
